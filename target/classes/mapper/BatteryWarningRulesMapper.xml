@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.mapper.BatteryWarningRulesMapper">
+
+    <resultMap type="com.server.model.entity.BatteryWarningRules" id="BatteryWarningRulesResult">
+        <result property="warningLevel"    column="warning_level"    />
+        <result property="maxDiff"    column="max_diff"    />
+        <result property="minDiff"    column="min_diff"    />
+        <result property="batteryType"    column="battery_type"    />
+        <result property="ruleType"    column="rule_type"    />
+        <result property="name"    column="name"    />
+        <result property="ruleNumber"    column="rule_number"    />
+        <result property="id"    column="id"    />
+    </resultMap>
+
+    <sql id="selectBatteryWarningRulesVo">
+        select warning_level, max_diff, min_diff, battery_type, rule_type, name, rule_number, id from battery_warning_rules
+    </sql>
+
+    <select id="selectBatteryWarningRulesList" parameterType="com.server.model.entity.BatteryWarningRules" resultMap="BatteryWarningRulesResult">
+        <include refid="selectBatteryWarningRulesVo"/>
+        <where>
+            <if test="ruleNumber != null "> and rule_number = #{ruleNumber}</if>
+        </where>
+    </select>
+
+</mapper>

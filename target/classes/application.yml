@@ -1,0 +1,36 @@
+# 公共配置文件
+
+basic:
+  # 项目名称
+  name: 汽车电池预警系统
+  # 项目版本
+  version: 0.0.1
+  # 版权声明年份
+  copyrightYear: 2024
+server:
+  # 服务器地址，用于指定应用运行的服务器地址
+  address: localhost
+  # 服务器端口号，用于指定应用运行的服务器端口号
+  port: 8889
+  # Servlet 上下文路径，用于设置访问应用时的基础路径
+  # 例如，如果 context-path 设置为 /basic_server，则访问应用时的 URL 会包含此路径
+  servlet:
+    context-path: /server
+
+spring:
+  # Spring 应用名称，通常用于服务发现和配置管理
+  application:
+    name:basic_server
+  mvc:
+    pathmatch:
+      # Spring MVC 的路径匹配策略，设置为 ant_path_matcher 表示使用 Ant 风格的路径匹配
+      matching-strategy: ant_path_matcher
+  # Spring 文件上传的配置
+  servlet:
+    multipart:
+      # 设置文件上传的大小限制，这里限制为最大 10MB
+      max-file-size: 10MB
+  # Spring 配置文件激活的配置文件列表
+  # 这些配置文件将以 active-profiles 的形式被加载，通常用于不同环境或不同功能的配置分离
+  profiles:
+    active: build

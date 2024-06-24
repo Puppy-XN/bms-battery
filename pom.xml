@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 指定当前 POM 模型的版本，4.0.0 是 Maven 2 和 Maven 3 的通用版本 -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 指定父级 POM，这里使用 Spring Boot 的父级 POM，它提供了许多默认的配置和依赖管理 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.2</version> <!-- 指定 Spring Boot 父级 POM 的版本 -->
+        <relativePath/> <!-- 默认情况下，Maven 会根据 relativePath 查找父级 POM，这里设置为空，表示直接使用指定的父级 POM -->
+    </parent>
+
+    <!-- 定义当前项目的 groupId，通常与项目包结构相对应 -->
+    <groupId>com.server</groupId>
+    <!-- 定义当前项目的 artifactId，通常是项目名称 -->
+    <artifactId>bms_server</artifactId>
+    <!-- 指定打包类型，这里设置为 war，表示将项目打包为 Web 应用程序档案 -->
+    <packaging>war</packaging>
+    <!-- 定义当前项目的版本号 -->
+    <version>0.0.1</version>
+
+    <!-- 定义当前项目的名称 -->
+    <name>server</name>
+
+    <!-- 定义项目级别的属性，这里指定了 Java 的版本为 1.8 -->
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+
+    <dependencies>
+        <!-- 添加对 Spring Boot 的 Freemarker 模板引擎的支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
+        <!-- 添加对 Spring Boot Web 开发的支持，包括内嵌的 Tomcat 容器和 Spring MVC -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- 添加对 Spring Boot 集成 Redis 的支持，Redis 是一个开源的、高性能的键值数据库 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- 添加对 Spring Session 使用 Redis 作为分布式的会话存储的支持 -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+
+        <!-- 添加对 Spring Boot AOP 编程的支持，用于面向切面的编程，如日志、事务等 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- 添加对 Spring Boot 集成 MyBatis 的支持，MyBatis 是一个 SQL 映射框架，用于简化数据库操作 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <!-- Spring Security Core dependency for security annotations like @PreAuthorize -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.7.3</version> <!-- 请使用最新的稳定版本 -->
+        </dependency>
+
+        <!-- 提供Spring Security的依赖，包括身份验证、授权等安全控制功能 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- 添加对 MyBatis Plus 的支持，MyBatis Plus 是 MyBatis 的增强工具，提供了更多的功能和简化操作 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.2</version> <!-- 指定 MyBatis Plus Boot 启动器的版本 -->
+        </dependency>
+
+        <!-- 添加对腾讯云对象存储服务（COS）API 的支持，用于在腾讯云上存储和检索数据 -->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.6.89</version>
+        </dependency>
+
+        <!-- 添加对 Apache Commons Lang3 的支持，这是一个用于处理 Java 字符串、数字、日期等实用工具的库 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <!-- 添加对 EasyExcel 的支持，EasyExcel 是一个用于读写 Excel 文件的 Java 库，支持大数据量的读写操作 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+
+        <!-- 添加对 Hutool 工具库的支持，Hutool 是一个小而全的 Java 工具类库，用于简化各种日常开发任务 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.8</version> <!-- 指定 Hutool 工具库的版本 -->
+        </dependency>
+
+        <!-- 添加对 Spring Boot 开发工具的支持，包括自动重启、LiveReload 等，用于提高开发效率 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope> <!-- 指定依赖的作用域为运行时，不会包含在打包的文件中 -->
+            <optional>true</optional> <!-- 表示这个依赖是可选的，其他项目依赖当前项目时不会自动引入这个依赖 -->
+        </dependency>
+
+        <!-- 添加对 MySQL 数据库连接器的支持，用于在 Java 应用程序中连接到 MySQL 数据库 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope> <!-- 指定依赖的作用域为运行时，不会包含在打包的文件中 -->
+        </dependency>
+
+        <!-- PostgreSQL数据库的JDBC驱动依赖 -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!-- knife4j-openapi2-spring-boot-starter: 提供Swagger UI的增强功能，用于API文档的查看和测试 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+
+        <!-- Oracle数据库的JDBC驱动依赖 -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <!-- 版本号通过变量${oracle.version}来指定，这个变量需要在pom.xml文件中的
+                 <properties>部分定义 -->
+            <version>11.2.0.3</version>
+        </dependency>
+
+        <!-- 使用Maven来管理项目依赖时，需要指定groupId, artifactId和version -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <!-- 达梦数据库的JDBC驱动依赖 -->
+        <dependency>
+            <groupId>com.dameng</groupId>
+            <artifactId>DmJdbcDriver18</artifactId>
+            <version>8.1.2.141</version>
+        </dependency>
+
+        <!-- 人大金仓数据库的JDBC驱动依赖 -->
+        <dependency>
+            <groupId>cn.com.kingbase</groupId>
+            <artifactId>kingbase8</artifactId>
+            <version>8.6.0</version>
+        </dependency>
+        <!-- ClickHouse数据库的JDBC驱动依赖 -->
+        <dependency>
+            <groupId>ru.yandex.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <!-- 版本号通过变量${clickhouse.version}来指定，这个变量需要在pom.xml文件中的
+                 <properties>部分定义 -->
+            <version>0.3.2</version>
+        </dependency>
+
+        <!-- Microsoft SQL Server数据库的JDBC驱动依赖 -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+        </dependency>
+
+        <!-- 添加对 Spring Boot 配置处理器的支持，用于在编译时处理 @ConfigurationProperties 注解 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional> <!-- 表示这个依赖是可选的，其他项目依赖当前项目时不会自动引入这个依赖 -->
+        </dependency>
+
+        <!-- 添加对 Lombok 的支持，Lombok 是一个 Java 库，用于简化 POJO 类的编写，通过注解自动生成构造函数、getter/setter 等 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional> <!-- 表示这个依赖是可选的，其他项目依赖当前项目时不会自动引入这个依赖 -->
+        </dependency>
+
+        <!-- 添加对 Spring Boot 测试的支持，包括 Spring Test、JUnit Jupiter、Mockito 等，用于编写和执行单元测试和集成测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope> <!-- 指定依赖的作用域为测试，表示这个依赖只在测试阶段需要 -->
+        </dependency>
+
+        <!-- 添加对 JJWT (Java JWT) 的支持，JJWT 是一个用于创建和解析 JSON Web Tokens (JWT) 的库 -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version> <!-- 指定 JJWT 的版本 -->
+        </dependency>
+
+        <!-- 添加对 Auth0 Java JWT 的支持，这是一个用于创建和验证 JWT 的库 -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.10.3</version> <!-- 指定 Auth0 Java JWT 的版本 -->
+        </dependency>
+
+        <!-- 添加对 AspectJ RT 的支持，AspectJ 是一个面向方面的编程 (AOP) 框架，用于在编译时或运行时处理切面 -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.6</version> <!-- 指定 AspectJ RT 的版本 -->
+        </dependency>
+
+        <!-- 添加对 AspectJ Tools 的支持，AspectJ Tools 提供了编译时编织（weaving）的功能，用于实现面向方面的编程（AOP） -->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.6</version> <!-- 指定 AspectJ Tools 的版本 -->
+            <scope>provided</scope> <!-- 指定依赖的作用域为 provided，表示这个依赖由容器提供，不会打包到最终的应用程序中 -->
+        </dependency>
+
+        <!-- 添加对 SLF4J API 的支持，SLF4J 是一个抽象层，用于桥接不同的日志框架 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.32</version> <!-- 指定 SLF4J API 的版本 -->
+        </dependency>
+
+        <!-- 添加对 Logback 的支持，Logback 是一个用于日志管理的框架，是 SLF4J 的实现之一 -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.6</version> <!-- 指定 Logback Classic 的版本 -->
+        </dependency>
+
+        <!-- 添加对 Fastjson 的支持，Fastjson 是一个用于处理 JSON 数据的 Java 库，提供快速的序列化和反序列化能力 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.15.graal</version> <!-- 指定 Fastjson 的版本 -->
+        </dependency>
+
+        <!-- 添加对 Commons FileUpload 的支持，Commons FileUpload 是一个用于处理 HTTP 文件上传的 Java 库 -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version> <!-- 指定 Commons FileUpload 的版本 -->
+        </dependency>
+
+        <!-- pool 对象池 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+        <!-- 添加对 PageHelper 的支持，PageHelper 是一个 MyBatis 分页插件，用于简化数据库分页操作 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
+        <!-- 添加对 xunfei-spark4j 的支持，xunfei-spark4j 是用于与科大讯飞语音识别服务集成的 Java SDK -->
+        <dependency>
+            <groupId>io.github.briqt</groupId>
+            <artifactId>xunfei-spark4j</artifactId>
+            <version>1.2.0</version> <!-- 指定 xunfei-spark4j 的版本 -->
+        </dependency>
+
+        <!-- 添加对 UserAgentUtils 的支持，UserAgentUtils 是一个用于解析用户代理字符串的 Java 库 -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>1.21</version> <!-- 指定 UserAgentUtils 的版本 -->
+        </dependency>
+
+        <!-- 添加对腾讯云 SDK for Java 的支持，用于访问腾讯云提供的服务，如云服务器、云数据库等 -->
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <version>3.1.322</version> <!-- 指定腾讯云 SDK for Java 的版本 -->
+        </dependency>
+
+        <!-- 添加对 JSON-java 的支持，JSON-java 是一个用于处理 JSON 数据的 Java 库 -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version> <!-- 指定 JSON-java 的版本 -->
+        </dependency>
+
+        <!-- 添加对 Tesseract OCR 的支持，Tesseract OCR 是一个开源的 OCR 引擎，用于识别图像中的文字 -->
+        <dependency>
+            <groupId>net.sourceforge.tess4j</groupId>
+            <artifactId>tess4j</artifactId>
+            <version>4.1.1</version> <!-- 指定 Tesseract OCR 的 Java 封装版本 -->
+        </dependency>
+
+        <!-- Alibaba Druid是一个数据库连接池，同时提供了强大的SQL解析和格式化功能 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.8</version> <!-- 请使用最新的版本号替换这里的版本 -->
+        </dependency>
+
+        <!-- 验证码生成库 -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Maven 的构建配置 -->
+    <build>
+        <plugins>
+            <!-- Spring Boot Maven 插件，用于打包 Spring Boot 应用程序为可执行的 JAR 或 WAR 文件 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- 设置 Maven 仓库，用于从远程仓库下载依赖和插件 -->
+    <repositories>
+        <!-- 阿里云公共仓库配置 -->
+        <repository>
+            <id>aliyun</id> <!-- 仓库的唯一标识符 -->
+            <name>aliyun</name> <!-- 仓库的名称 -->
+            <url>https://maven.aliyun.com/repository/public</url> <!-- 仓库的 URL 地址 -->
+            <releases> <!-- 发布版本的配置 -->
+                <enabled>true</enabled> <!-- 是否启用发布版本下载 -->
+            </releases>
+            <snapshots> <!-- 快照版本的配置 -->
+                <enabled>false</enabled> <!-- 是否启用快照版本下载 -->
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <!-- 设置 Maven 插件仓库，用于下载构建插件 -->
+    <pluginRepositories>
+        <!-- 阿里云插件仓库配置 -->
+        <pluginRepository>
+            <id>aliyun-plugin</id> <!-- 插件仓库的唯一标识符 -->
+            <name>aliyun-plugin</name> <!-- 插件仓库的名称 -->
+            <url>https://maven.aliyun.com/repository/public</url> <!-- 插件仓库的 URL 地址 -->
+            <releases> <!-- 发布版本的配置 -->
+                <enabled>true</enabled> <!-- 是否启用发布版本下载 -->
+            </releases>
+            <snapshots> <!-- 快照版本的配置 -->
+                <enabled>false</enabled> <!-- 是否启用快照版本下载 -->
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+</project>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.mapper.VehicleInfoMapper">
+
+    <resultMap type="com.server.model.entity.VehicleInfo" id="VehicleInfoResult">
+        <result property="vid"    column="vid"    />
+        <result property="frameNumber"    column="frame_number"    />
+        <result property="batteryType"    column="battery_type"    />
+        <result property="totalMileage"    column="total_mileage"    />
+        <result property="state"    column="state"    />
+    </resultMap>
+
+    <sql id="selectVehicleInfoVo">
+        select vid, frame_number, battery_type, total_mileage, state from vehicle_info
+    </sql>
+
+    <select id="selectVehicleInfoList" parameterType="com.server.model.entity.VehicleInfo" resultMap="VehicleInfoResult">
+        <include refid="selectVehicleInfoVo"/>
+        <where>
+            <if test="vid != null  and vid != ''"> and vid = #{vid}</if>
+            <if test="frameNumber != null "> and frame_number = #{frameNumber}</if>
+            <if test="batteryType != null  and batteryType != ''"> and battery_type = #{batteryType}</if>
+            <if test="totalMileage != null  and totalMileage != ''"> and total_mileage = #{totalMileage}</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
+        </where>
+    </select>
+
+    <select id="selectVehicleInfoByFrameNumber" parameterType="Long" resultMap="VehicleInfoResult">
+        <include refid="selectVehicleInfoVo"/>
+        where frame_number = #{frameNumber}
+    </select>
+
+    <select id="selectVehicleInfoByVid" parameterType="String" resultMap="VehicleInfoResult">
+        <include refid="selectVehicleInfoVo"/>
+        where vid = #{vid}
+    </select>
+
+    <insert id="insertVehicleInfo" parameterType="com.server.model.entity.VehicleInfo">
+        insert into vehicle_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vid != null">vid,</if>
+            <if test="frameNumber != null">frame_number,</if>
+            <if test="batteryType != null">battery_type,</if>
+            <if test="totalMileage != null">total_mileage,</if>
+            <if test="state != null">state,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vid != null">#{vid},</if>
+            <if test="frameNumber != null">#{frameNumber},</if>
+            <if test="batteryType != null">#{batteryType},</if>
+            <if test="totalMileage != null">#{totalMileage},</if>
+            <if test="state != null">#{state},</if>
+        </trim>
+    </insert>
+
+    <update id="updateVehicleInfo" parameterType="com.server.model.entity.VehicleInfo">
+        update vehicle_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="frameNumber != null">frame_number = #{frameNumber},</if>
+            <if test="batteryType != null">battery_type = #{batteryType},</if>
+            <if test="totalMileage != null">total_mileage = #{totalMileage},</if>
+            <if test="state != null">state = #{state},</if>
+        </trim>
+        where vid = #{vid}
+    </update>
+
+    <delete id="deleteVehicleInfoByVid" parameterType="String">
+        delete from vehicle_info where vid = #{vid}
+    </delete>
+
+</mapper>

@@ -1,0 +1,101 @@
+# 开发环境配置
+spring:
+  # 数据源配置
+  datasource:
+    # 数据库驱动类名
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库连接 URL
+    url: jdbc:mysql://localhost:3306/bms_server_20240620
+    # 数据库用户名
+    username: root
+    # 数据库密码
+    password: 123456
+
+  # Jackson 配置，用于序列化和反序列化 JSON 数据
+  jackson:
+    # 日期格式
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 时区设置
+    time-zone: GMT+8
+
+  # Redis 配置
+  redis:
+    # Redis 数据库索引
+    database: 11
+    # Redis 服务器地址
+    host: localhost
+    # Redis 服务器端口
+    port: 6379
+    # 连接超时时间（毫秒）
+    timeout: 50002000
+    # Redis 服务器密码
+    password:
+# MyBatis 配置
+mybatis:
+  # 类型别名包路径，用于简化 Mapper 文件中的类型定义
+  typeAliasesPackage: com.server.mapper, com.server.model.**
+  # Mapper XML 文件的位置，用于定义 SQL 映射语句
+  mapperLocations: classpath*:mapper/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+  configuration:
+    # 是否开启下划线转驼峰命名规则（默认为 false）
+    map-underscore-to-camel-case: true
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  configuration:
+    # MyBatis-Plus 是否开启下划线转驼峰命名规则（默认为 true），这里显式设置为 false 以覆盖 MyBatis 的配置
+    map-underscore-to-camel-case: false
+    # 日志实现类，用于输出 SQL 日志到控制台
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 逻辑删除字段的名称
+      logic-delete-field: del_flag
+      # 逻辑删除的值（删除状态）
+      logic-delete-value: 1
+      # 逻辑未删除的值（正常状态）
+      logic-not-delete-value: 0
+
+pagehelper:
+  # 设置方言，此处指定 MySQL 数据库
+  helper-dialect: mysql
+  # 是否启动合理化，默认是 false。
+  # 启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages（最大页数）会查询最后一页。
+  # 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
+  reasonable: true
+  # 是否支持接口参数来传递分页参数，默认false
+  support-methods-arguments: true
+  # 为了支持startPage(Object params)方法，增加了该参数来配置参数映射，用于从对象中根据属性名取值
+  params: count=countSql
+  # 默认值为 false，当该参数设置为 true 时，如果 pageSize=0 或者 RowBounds.limit = 0 就会查询出全部的结果（相当于没有执行分页查询，但是返回结果仍然是 Page 类型）
+  page-size-zero: true
+
+# 接口文档配置
+knife4j:
+  # 启用Knife4j
+  enable: true
+  setting:
+    # 显示模型
+    enableSwaggerModels: true
+    # 显示文档管理
+    enableDocumentManage: true
+  openapi:
+    # 接口文档标题
+    title: "${basic.name} 接口文档"
+    # 接口文档描述
+    description: "本接口文档提供了（API名称）API的详细信息，包括可用的路径、参数、请求格式和响应内容。这些API主要用于（API的功能和用途），通过RESTful架构提供可靠、高效的服务。无论您是开发者、测试人员还是其他相关人员，都可以通过本文档了解API的具体使用方法。请确保在使用API前仔细阅读和理解本文档，如有疑问，请随时联系我们的技术支持团队。"
+    # 接口文档版本
+    version: ${basic.version}
+    # 服务条款URL
+    termsOfServiceUrl: "http://${server.address}:${server.port}${server.servlet.context-path}"
+    # API联系人信息
+    license: "Like Old Dream"
+    group:
+      default:
+        # API规则，这里使用包名
+        api-rule: package
+        # 指定扫描的控制器包路径
+        api-rule-resources:
+          - com.server.controller
